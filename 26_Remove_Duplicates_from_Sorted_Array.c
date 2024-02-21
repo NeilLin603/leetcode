@@ -20,7 +20,7 @@ void printArray(const int *nums, int numsSize, const char *name) {
 }
 
 int main() {
-    struct {
+    struct TestCase {
         int nums[10];
         int numsSize;
     } tc[] = {
