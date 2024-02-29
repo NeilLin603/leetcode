@@ -2,16 +2,15 @@
 
 int strStr(char *haystack, char *needle) {
     int i = 0, j = 0;
-    while (haystack[i]) {
-        if (!needle[j]) {
-            return i;
-        }
+    while (needle[j]) {
         if (haystack[i + j] != needle[j++]) {
-            i++;
+            if (!haystack[++i]) {
+                return -1;
+            }
             j = 0;
         }
     }
-    return -1;
+    return i;
 }
 
 int main() {
