@@ -4,19 +4,17 @@
 #include <string.h>
 
 bool isPalindrome(char *s) {
-    char *str = (char *)malloc(strlen(s));
-    int i = 0, j = 0;
+    char *str = (char *)malloc(strlen(s)), *ptr = str;
     do {
-        if (s[i] >= 'a' && s[i] <= 'z' || s[i] >= '0' && s[i] <= '9') {
-            str[j++] = s[i];
-        } else if (s[i] >= 'A' && s[i] <= 'Z') {
-            str[j++] = s[i] - 'A' + 'a';
+        if (*s >= 'a' && *s <= 'z' || *s >= '0' && *s <= '9') {
+            *ptr++ = *s;
+        } else if (*s >= 'A' && *s <= 'Z') {
+            *ptr++ = *s - 'A' + 'a';
         } else;
-    } while (s[i++]);
-    i = 0;
-    int mid = j >> 1;
-    while (i < mid) {
-        if (str[i++] != str[--j]) {
+    } while (*s++);
+    s = str;
+    while (s < --ptr) {
+        if (*s++ != *ptr) {
             free(str);
             return false;
         }
