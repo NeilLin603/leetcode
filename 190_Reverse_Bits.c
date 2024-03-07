@@ -34,7 +34,7 @@ void printBinary(uint32_t n) {
 }
 
 int main() {
-    uint32_t n[] = {43261596, 4294967293}, nSize = sizeof(n)/ sizeof(n[0]);
+    uint32_t n[] = {43261596, 4294967293}, nSize = sizeof(n) / sizeof(n[0]);
 
     for (int i = 0; i < nSize; i++) {
         printf("Example %d:\nInput: n = ", i + 1);
