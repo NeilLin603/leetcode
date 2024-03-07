@@ -41,17 +41,13 @@ int main() {
         char *a, *b;
     } tc[] = {
         {.a = "11", .b = "1"},
-        {.a = "1010", .b = "1011"},
-        {.a = "0", .b = "0"},
-        {.a = "100", .b = "110010"}};
+        {.a = "1010", .b = "1011"}};
     int tcSize = sizeof(tc) / sizeof(tc[0]);
-    char *output;
 
     for (int i = 0; i < tcSize; i++) {
         printf("Example %d:\n", i + 1);
         printf("Input: a = \"%s\", b = \"%s\"\n", tc[i].a, tc[i].b);
-        output = addBinary(tc[i].a, tc[i].b);
-        printf("Output: %s\n\n", output);
+        printf("Output: %s\n\n", addBinary(tc[i].a, tc[i].b));
     }
 
     return 0;
