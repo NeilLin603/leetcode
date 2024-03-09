@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+#if 0 // Original
 int rangeBitwiseAnd(int left, int right) {
     int result = left & right, diff = left ^ right, i = 0;
     while (diff) {
@@ -11,6 +12,21 @@ int rangeBitwiseAnd(int left, int right) {
     }
     return result;
 }
+#else // Further optimize memory usage from above function
+int rangeBitwiseAnd(int left, int right) {
+    left ^= right;
+    right &= left ^ right;
+    int i = 0;
+    while (left) {
+        left >>= 1;
+        i++;
+    }
+    while (i--) {
+        right &= ~(1U << i);
+    }
+    return right;
+}
+#endif
 
 int main() {
     struct TestCase {
