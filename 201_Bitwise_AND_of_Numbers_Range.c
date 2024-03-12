@@ -16,13 +16,11 @@ int rangeBitwiseAnd(int left, int right) {
 int rangeBitwiseAnd(int left, int right) {
     left ^= right;
     right &= left ^ right;
-    int i = 0;
+    unsigned int mask = 1;
     while (left) {
+        right &= ~mask;
+        mask <<= 1;
         left >>= 1;
-        i++;
-    }
-    while (i--) {
-        right &= ~(1U << i);
     }
     return right;
 }
