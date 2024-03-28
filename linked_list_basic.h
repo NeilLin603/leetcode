@@ -104,17 +104,13 @@ bool popTail(Node_t **head, int *val) {
  * \param valsSize The array size of list values.
  * \return The head node of the singly-linked list.
  */
-Node_t *createList(const int *vals, int valsSize) {
-    Node_t *head = NULL;
-    if (valsSize) {
-        pushHead(&head, vals[0]);
-        Node_t *cur = head;
-        for (int i = 1; i < valsSize; i++) {
-            cur->next = (Node_t *)malloc(sizeof(Node_t));
-            cur = cur->next;
-            cur->val = vals[i];
-        }
-        cur->next = NULL;
+Node_t *createList(int *vals, int valsSize) {
+    Node_t *head = NULL, *new;
+    while (valsSize--) {
+        new = (Node_t *)malloc(sizeof(Node_t));
+        new->val = vals[valsSize];
+        new->next = head;
+        head = new;
     }
     return head;
 }
