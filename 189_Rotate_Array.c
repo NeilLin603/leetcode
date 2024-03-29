@@ -1,21 +1,19 @@
 #include <stdio.h>
 
-void swap(int *a, int *b) {
-    *a ^= *b;
-    *b ^= *a;
-    *a ^= *b;
-}
+#define swap(a, b) \
+    a ^= b; \
+    b ^= a; \
+    a ^= b
 
 void rotate(int *nums, int numsSize, int k) {
     k %= numsSize;
-    if (!k) {
-        return;
+    if (k) {
+        for (int i = 0; i < k; i++) {
+            swap(nums[i], nums[numsSize - k + i]);
+        }
+        numsSize -= k;
+        rotate(nums + k, numsSize, numsSize < k ? k - numsSize : k);
     }
-    for (int i = 0; i < k; i++) {
-        swap(nums + i, nums + numsSize - k + i);
-    }
-    numsSize -= k;
-    rotate(nums + k, numsSize, numsSize < k ? k - numsSize : k);
 }
 
 void printArray(const int *nums, int numsSize, const char *name) {
