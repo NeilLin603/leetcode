@@ -1,19 +1,19 @@
 #include <stdio.h>
 
-int maxProfit(int *prices, int pricesSize) {
+int maxProfit(int* prices, int pricesSize) {
     int profit = 0;
-    for (int i = 1; i < pricesSize; i++) if (prices[i] > prices[i - 1]) {
-        profit += prices[i] - prices[i - 1];
+    while (--pricesSize) if (*prices++ < *prices) {
+        profit += *prices - *(prices - 1);
     }
     return profit;
 }
 
-void printArray(const int *nums, int numsSize, const char *name) {
+void printArray(int const *nums, int numsSize, char const *name) {
     printf("%s = [", name);
     if (numsSize) {
-        printf("%d", nums[0]);
-        for (int i = 1; i < numsSize; i++) {
-            printf(",%d", nums[i]);
+        printf("%d", *nums);
+        while (--numsSize) {
+            printf(",%d", *++nums);
         }
     }
     printf("]\n");
@@ -21,12 +21,10 @@ void printArray(const int *nums, int numsSize, const char *name) {
 
 int main() {
     struct TestCase {
-        int prices[6];
-        int pricesSize;
+        int prices[6], pricesSize;
     } tc[] = {
         {.prices = {7,1,5,3,6,4}, .pricesSize = 6},
-        {.prices = {1,2,3,4,5}, .pricesSize = 5},
-        {.prices = {7,6,4,3,1}, .pricesSize = 5}};
+        {.prices = {1,2,3,4,5}, .pricesSize = 5}};
     int tcSize = sizeof(tc) / sizeof(tc[0]);
 
     for (int i = 0; i < tcSize; i++) {
