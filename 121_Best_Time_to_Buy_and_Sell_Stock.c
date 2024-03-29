@@ -3,11 +3,13 @@
 int maxProfit(int *prices, int pricesSize) {
     int profit = 0;
     for (int i = 1; i < pricesSize; i++) {
-        if (prices[0] > prices[i]) {
-            prices[0] = prices[i];
-        } else if (profit < prices[i] - prices[0]) {
-            profit = prices[i] - prices[0];
-        } else;
+        if (*prices > prices[i]) {
+            *prices = prices[i];
+        } else {
+            if (prices[i] - *prices > profit) {
+                profit = prices[i] - *prices;
+            }
+        }
     }
     return profit;
 }
@@ -15,9 +17,9 @@ int maxProfit(int *prices, int pricesSize) {
 void printArray(int const *nums, int numsSize, char const *name) {
     printf("%s = [", name);
     if (numsSize) {
-        printf("%d", nums[0]);
-        for (int i = 1; i < numsSize; i++) {
-            printf(",%d", nums[i]);
+        printf("%d", *nums);
+        while (--numsSize) {
+            printf(",%d", *++nums);
         }
     }
     printf("]\n");
@@ -25,8 +27,7 @@ void printArray(int const *nums, int numsSize, char const *name) {
 
 int main() {
     struct TestCase {
-        int prices[6];
-        int pricesSize;
+        int prices[6], pricesSize;
     } tc[] = {
         {.prices = {7,1,5,3,6,4}, .pricesSize = 6},
         {.prices = {7,6,4,3,1}, .pricesSize = 5}};
