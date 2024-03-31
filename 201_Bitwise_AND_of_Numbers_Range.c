@@ -16,10 +16,8 @@ int rangeBitwiseAnd(int left, int right) {
 int rangeBitwiseAnd(int left, int right) {
     left ^= right;
     right &= left ^ right;
-    unsigned int mask = 1;
     while (left) {
-        right &= ~mask;
-        mask <<= 1;
+        right &= ~left;
         left >>= 1;
     }
     return right;
