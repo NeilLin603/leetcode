@@ -1,24 +1,26 @@
 #include <stdio.h>
 
 int majorityElement(int *nums, int numsSize) {
-    int maj = nums[--numsSize], count = 1;
-    while (numsSize--) {
-        if (nums[numsSize] == maj) {
-            count++;
-        } else if (!--count) {
-            maj = nums[numsSize];
-            count = 1;
-        } else;
+    int cnt = 1, maj = *nums;
+    while (--numsSize) {
+        if (maj == *++nums) {
+            cnt++;
+        } else {
+            if (!--cnt) {
+                cnt = 1;
+                maj = *nums;
+            }
+        }
     }
     return maj;
 }
 
-void printArray(const int *nums, int numsSize, const char *name) {
+void printArray(int *nums, int numsSize, const char *name) {
     printf("%s = [", name);
     if (numsSize) {
-        printf("%d", nums[0]);
-        for (int i = 1; i < numsSize; i++) {
-            printf(",%d", nums[i]);
+        printf("%d", *nums);
+        while (--numsSize) {
+            printf(",%d", *++nums);
         }
     }
     printf("]\n");
