@@ -1,24 +1,27 @@
 #include <stdio.h>
 
-int removeDuplicates(int *nums, int numsSize) {
-    int count = 0, j = 0;
+int removeDuplicates(int* nums, int numsSize) {
+    int cnt = 0, k = 0;
     for (int i = 1; i < numsSize; i++) {
-        if (nums[i] != nums[j]) {
-            count = 0;
-        } else if (count++) {
-            continue;
-        } else;
-        nums[++j] = nums[i];
+        if (nums[i] != nums[k]) {
+            nums[++k] = nums[i];
+            cnt = 0;
+        } else {
+            if (!cnt) {
+                nums[++k] = nums[i];
+                cnt++;
+            }
+        }
     }
-    return j + 1;
+    return k + 1;
 }
 
-void printArray(const int *nums, int numsSize, const char *name) {
+void printArray(int *nums, int numsSize, char *name) {
     printf("%s = [", name);
     if (numsSize) {
-        printf("%d", nums[0]);
-        for (int i = 1; i < numsSize; i++) {
-            printf(",%d", nums[i]);
+        printf("%d", *nums);
+        while (--numsSize) {
+            printf(",%d", *++nums);
         }
     }
     printf("]\n");
@@ -26,8 +29,7 @@ void printArray(const int *nums, int numsSize, const char *name) {
 
 int main() {
     struct TestCase {
-        int nums[9];
-        int numsSize;
+        int nums[10], numsSize;
     } tc[] = {
         {.nums = {1,1,1,2,2,3}, .numsSize = 6},
         {.nums = {0,0,1,1,1,1,2,3,3}, .numsSize = 9}};
