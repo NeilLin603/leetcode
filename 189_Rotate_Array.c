@@ -1,18 +1,18 @@
 #include <stdio.h>
 
-#define swap(a, b) \
-    a ^= b; \
-    b ^= a; \
-    a ^= b
+#define SWAP(a, b) do { \
+    (a) ^= (b); \
+    (b) ^= (a); \
+    (a) ^= (b); \
+} while (0)
 
 void rotate(int *nums, int numsSize, int k) {
     k %= numsSize;
     if (k) {
         for (int i = 0; i < k; i++) {
-            swap(nums[i], nums[numsSize - k + i]);
+            SWAP(nums[i], nums[i + numsSize - k]);
         }
-        numsSize -= k;
-        rotate(nums + k, numsSize, numsSize < k ? k - numsSize : k);
+        rotate(nums + k, numsSize - k, k);
     }
 }
 
