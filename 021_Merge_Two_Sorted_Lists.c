@@ -42,31 +42,31 @@ struct ListNode *mergeTwoLists(struct ListNode *list1, struct ListNode *list2) {
 }
 
 int main() {
-    struct TestCase {
-        int vals1[50], vals1Size, vals2[50], vals2Size;
+    struct {
+        int vals1[10], vals1Size, vals2[10], vals2Size;
     } tc[] = {
         {.vals1 = {1,2,4}, .vals1Size = 3, .vals2 = {1,3,4}, .vals2Size = 3},
         {.vals1Size = 0, .vals2Size = 0},
         {.vals1Size = 0, .vals2 = {0}, .vals2Size = 1}};
     int tcSize = sizeof(tc) / sizeof(tc[0]);
-    Node_t *list1, *list2, *output;
 
+    Node_t *list1, *list2, *list3;
     for (int i = 0; i < tcSize; i++) {
-        // Create list1 & list2
+        printf("Example %d:\n", i + 1);
+        
+        // Create lists
         list1 = createList(tc[i].vals1, tc[i].vals1Size);
         list2 = createList(tc[i].vals2, tc[i].vals2Size);
+        printList(list1, "l1");
+        printList(list2, "l2");
 
-        // Functional test
-        printf("Example %d:\n", i + 1);
-        printf("Input:\n");
-        printSinglyList(list1, "list1");
-        printSinglyList(list2, "list2");
-        output = mergeTwoLists(list1, list2);
-        printSinglyList(output, "Output");
+        // Merge two lists
+        list3 = mergeTwoLists(list1, list2);
+        printList(list3, "Output");
         printf("\n");
 
-        // Free list nodes
-        freeSinglyList(&output);
+        // Free lists
+        freeList(&list3);
     }
 
     return 0;
