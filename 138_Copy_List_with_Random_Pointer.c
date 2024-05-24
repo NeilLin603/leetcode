@@ -9,6 +9,7 @@ struct Node {
     struct Node *random;
 };
 
+#if 1 /* Solution 1 */
 static inline struct Node *copyList(struct Node *head) {
     struct Node *copy = (struct Node *)malloc(sizeof(struct Node)), *new = copy;
     new->val = head->val;
@@ -40,3 +41,39 @@ struct Node *copyRandomList(struct Node *head) {
     } while (cur1);
     return copy;
 }
+#else /* Solution 2 */
+struct Node *randNode(struct Node *head, struct Node *cur, struct Node *copy) {
+    while (cur->random != head) {
+        head = head->next;
+        copy = copy->next;
+    }
+    return copy;
+}
+
+struct Node *copyRandomList(struct Node *head) {
+    if (!head) {
+        return NULL;
+    }
+
+    struct Node *copy = (struct Node *)malloc(sizeof(struct Node));
+    copy->val = head->val;
+    struct Node *cur1 = head->next, *cur2 = copy;
+    while (cur1) {
+        cur2->next = (struct Node *)malloc(sizeof(struct Node));
+        cur2 = cur2->next;
+        cur2->val = cur1->val;
+        cur1 = cur1->next;
+    }
+    cur2->next = NULL;
+
+    cur1 = head;
+    cur2 = copy;
+    while (cur1) {
+        cur2->random = randNode(head, cur1, copy);
+        cur1 = cur1->next;
+        cur2 = cur2->next;
+    }
+
+    return copy;
+}
+#endif
