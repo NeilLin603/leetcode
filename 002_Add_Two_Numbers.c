@@ -74,7 +74,6 @@ int main() {
             popHead(&l2, &tmp);
         }
         freeList(&l1);
-        // while (popHead(&l1, &tmp));
     }
 
     return 0;
