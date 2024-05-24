@@ -8,15 +8,16 @@
  * };
  */
 bool hasCycle(struct ListNode *head) {
-    if (head) {
-        struct ListNode *traveler1 = head, *traveler2 = head;
-        while (traveler2->next && traveler2->next->next) {
-            traveler1 = traveler1->next;
-            traveler2 = traveler2->next->next;
-            if (traveler1 == traveler2) {
-                return true;
-            }
+    struct ListNode *temp = head;
+    while (head) {
+        if (!head->next) {
+            return false;
         }
+        if (temp == head->next) {
+            return true;
+        }
+        temp = temp->next;
+        head = head->next->next;
     }
     return false;
 }
