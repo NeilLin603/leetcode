@@ -128,10 +128,10 @@ static void printSinglyList(Node_t *head, const char *name) {
  */
 static void freeList(Node_t **head) {
     if (*head) {
-        Node_t *temp = (*head)->next;
+        Node_t *next = (*head)->next;
         free(*head);
         *head = NULL;
-        freeList(&temp);
+        freeList(&next);
     }
 }
 
