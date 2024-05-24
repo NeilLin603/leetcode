@@ -9,52 +9,56 @@
  */
 struct ListNode *reverseBetween(struct ListNode *head, int left, int right) {
     right -= left;
-    struct ListNode *cur = head, *ret1 = NULL;
+    struct ListNode *pre = NULL, *cur = head;
+
+    // Find the start node to be reversed
     while (--left) {
-        ret1 = cur;
+        pre = cur;
         cur = cur->next;
     }
-    struct ListNode *tmp, *ret2 = cur->next;
+
+    // Reverse nodes
+    struct ListNode *ret = cur, *next = cur->next, *next2;
     while (right--) {
-        tmp = ret2;
-        ret2 = ret2->next;
-        tmp->next = cur;
-        cur = tmp;
+        next2 = next->next;
+        next->next = cur;
+        cur = next;
+        next = next2;
     }
-    if (ret1) {
-        ret1->next->next = ret2;
-        ret1->next = cur;
+
+    // Combine the node which are not reversed
+    ret->next = next;
+    if (pre) {
+        pre->next = cur;
         return head;
     }
-    head->next = ret2;
     return cur;
 }
 
 int main() {
-    struct TestCase {
-        int vals[500], valsSize, left, right;
+    struct {
+        int vals[10], valsSize, left, right;
     } tc[] = {
         {.vals = {1,2,3,4,5}, .valsSize = 5, .left = 2, .right = 4},
         {.vals = {5}, .valsSize = 1, .left = 1, .right = 1}};
     int tcSize = sizeof(tc) / sizeof(tc[0]);
+
     Node_t *head;
-
     for (int i = 0; i < tcSize; i++) {
-        // Create list
-        head = createList(tc[i].vals, tc[i].valsSize);
-
-        // Input
         printf("Example %d:\n", i + 1);
-        printSinglyList(head, "Input: head");
-        printf("left = %d, right = %d\n", tc[i].left, tc[i].right);
+        
+        // Create lists
+        head = createList(tc[i].vals, tc[i].valsSize);
+        printList(head, "Input: head");
+        printf("       left = %d, right = %d\n", tc[i].left, tc[i].right);
 
-        // Output
+        // Reverse list between left & right
         head = reverseBetween(head, tc[i].left, tc[i].right);
-        printSinglyList(head, "Output");
+        printList(head, "Output");
         printf("\n");
 
-        // Free list nodes
-        freeSinglyList(&head);
+        // Free list
+        freeList(&head);
     }
 
     return 0;
