@@ -13,21 +13,13 @@ typedef struct ListNode {
     struct ListNode * next;
 } Node_t;
 
-void pushHead(Node_t **, int);
-void pushTail(Node_t **, int);
-bool popHead(Node_t **, int *);
-bool popTail(Node_t **, int *);
-Node_t *createList(const int *, int);
-void printSinglyList(Node_t *, const char *);
-void freeSinglyList(Node_t **);
-
 /**
  * \brief Add a node to list head.
  * \param head Pointer to the head node of the list.
  * \param val The value for the node to be added.
  * \return None.
  */
-void pushHead(Node_t **head, int val) {
+static void pushHead(Node_t **head, int val) {
     Node_t *new = (Node_t *)malloc(sizeof(Node_t));
     new->val = val;
     new->next = *head;
@@ -40,7 +32,7 @@ void pushHead(Node_t **head, int val) {
  * \param val The value for the node to be added.
  * \return None.
  */
-void pushTail(Node_t **head, int val) {
+static void pushTail(Node_t **head, int val) {
     Node_t *new = (Node_t *)malloc(sizeof(Node_t));
     new->val = val;
     new->next = NULL;
@@ -61,7 +53,7 @@ void pushTail(Node_t **head, int val) {
  * \param val Pointer to the variable to be popped on.
  * \return \b true - Pop succeeded. \b false - List is empty. Pop failed.
  */
-bool popHead(Node_t **head, int *val) {
+static bool popHead(Node_t **head, int *val) {
     if (*head) {
         Node_t *ret = *head;
         *val = ret->val;
@@ -78,7 +70,7 @@ bool popHead(Node_t **head, int *val) {
  * \param val Pointer to the variable to be popped on.
  * \return \b true - Pop succeeded. \b false - List is empty. Pop failed.
  */
-bool popTail(Node_t **head, int *val) {
+static bool popTail(Node_t **head, int *val) {
     if (!*head) {
         return false;
     }
@@ -104,13 +96,12 @@ bool popTail(Node_t **head, int *val) {
  * \param valsSize The array size of list values.
  * \return The head node of the singly-linked list.
  */
-Node_t *createList(int *vals, int valsSize) {
-    Node_t *head = NULL, *new;
-    while (valsSize--) {
-        new = (Node_t *)malloc(sizeof(Node_t));
-        new->val = vals[valsSize];
-        new->next = head;
-        head = new;
+static Node_t *createList(int *vals, int valsSize) {
+    Node_t *head = NULL;
+    if (valsSize) {
+        head = (Node_t *)malloc(sizeof(Node_t));
+        head->val = *vals;
+        head->next = createList(vals + 1, valsSize - 1);
     }
     return head;
 }
@@ -121,7 +112,7 @@ Node_t *createList(int *vals, int valsSize) {
  * \param name The list name.
  * \return None.
  */
-void printSinglyList(Node_t *head, const char *name) {
+static void printSinglyList(Node_t *head, const char *name) {
     printf("%s = ", name);
     while (head) {
         printf("(%d)->", head->val);
@@ -135,7 +126,7 @@ void printSinglyList(Node_t *head, const char *name) {
  * \param head Pointer to the head node of the list.
  * \return None.
  */
-void freeSinglyList(Node_t **head) {
+static void freeSinglyList(Node_t **head) {
     Node_t *ret;
     while (*head) {
         ret = *head;
