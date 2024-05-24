@@ -126,12 +126,12 @@ static void printSinglyList(Node_t *head, const char *name) {
  * \param head Pointer to the head node of the list.
  * \return None.
  */
-static void freeSinglyList(Node_t **head) {
-    Node_t *ret;
-    while (*head) {
-        ret = *head;
-        *head = ret->next;
-        free(ret);
+static void freeList(Node_t **head) {
+    if (*head) {
+        Node_t *temp = (*head)->next;
+        free(*head);
+        *head = NULL;
+        freeList(&temp);
     }
 }
 
