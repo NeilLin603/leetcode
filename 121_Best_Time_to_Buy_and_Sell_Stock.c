@@ -1,13 +1,13 @@
 #include <stdio.h>
 
 int maxProfit(int *prices, int pricesSize) {
-    int profit = 0;
-    for (int i = 1; i < pricesSize; i++) {
-        if (*prices > prices[i]) {
-            *prices = prices[i];
+    int price = *prices, profit = 0;
+    while (--pricesSize) {
+        if (price > *++prices) {
+            price = *prices;
         } else {
-            if (prices[i] - *prices > profit) {
-                profit = prices[i] - *prices;
+            if (profit < *prices - price) {
+                profit = *prices - price;
             }
         }
     }
