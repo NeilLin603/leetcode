@@ -69,17 +69,13 @@ bool isValid(char *s) {
 #endif /* #ifdef METHOD_ARRAY */
 
 int main() {
-    char *s[] = {"()", "()[]{}", "(]", "([)]", "([]){}", "(([]){})"};
+    char *s[] = {"()", "()[]{}", "(]", "{[]}"};
     int sSize = sizeof(s) / sizeof(s[0]);
 
     for (int i = 0; i < sSize; i++) {
         printf("Example %d:\n", i + 1);
         printf("Input: s = \"%s\"\n", s[i]);
-        if (isValid(s[i])) {
-            printf("Output: true\n\n");
-        } else {
-            printf("Output: false\n\n");
-        }
+        printf("Output: %s\n\n", isValid(s[i]) ? "true" : "false");
     }
 
     return 0;
