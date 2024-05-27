@@ -1,9 +1,12 @@
 #include <stdio.h>
 
-int maxProfit(int* prices, int pricesSize) {
+int maxProfit(int *prices, int pricesSize) {
     int profit = 0;
-    while (--pricesSize) if (*prices++ < *prices) {
-        profit += *prices - *(prices - 1);
+    while (--pricesSize) {
+        if (*(prices + 1) > *prices) {
+            profit += *(prices + 1) - *prices;
+        }
+        prices++;
     }
     return profit;
 }
