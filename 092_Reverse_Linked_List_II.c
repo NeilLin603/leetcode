@@ -26,7 +26,7 @@ struct ListNode *reverseBetween(struct ListNode *head, int left, int right) {
         next = next2;
     }
 
-    // Combine the node which are not reversed
+    // Combine the nodes which are not reversed
     ret->next = next;
     if (pre) {
         pre->next = cur;
