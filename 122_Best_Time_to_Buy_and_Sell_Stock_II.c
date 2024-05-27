@@ -24,7 +24,8 @@ int main() {
         int prices[6], pricesSize;
     } tc[] = {
         {.prices = {7,1,5,3,6,4}, .pricesSize = 6},
-        {.prices = {1,2,3,4,5}, .pricesSize = 5}};
+        {.prices = {1,2,3,4,5}, .pricesSize = 5},
+        {.prices = {7,6,4,3,1}, .pricesSize = 5}};
     int tcSize = sizeof(tc) / sizeof(tc[0]);
 
     for (int i = 0; i < tcSize; i++) {
