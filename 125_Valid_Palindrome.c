@@ -1,26 +1,38 @@
-#include <stdio.h>
 #include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
+#include <stdio.h>
+
+int strLen(char *s) {
+    char *t = s - 1;
+    while (*++t);
+    return t - s;
+}
 
 bool isPalindrome(char *s) {
-    char *str = (char *)malloc(strlen(s)), *ptr = str;
-    do {
-        if (*s >= 'a' && *s <= 'z' || *s >= '0' && *s <= '9') {
-            *ptr++ = *s;
-        } else if (*s >= 'A' && *s <= 'Z') {
-            *ptr++ = *s - 'A' + 'a';
-        } else;
-    } while (*s++);
-    s = str;
-    while (s < --ptr) {
-        if (*s++ != *ptr) {
-            free(str);
+    int i = -1, j = strLen(s);
+    char c1, c2;
+    for (;;) {
+        do {
+            if (++i >= j) {
+                return true;
+            }
+            c1 = s[i];
+            if (c1 >= 'A' && c1 <= 'Z') {
+                c1 -= 'S' - 's';
+            }
+        } while ((c1 < 'a' || c1 > 'z') && (c1 < '0' || c1 > '9'));
+        do {
+            if (--j <= i) {
+                return true;
+            }
+            c2 = s[j];
+            if (c2 >= 'A' && c2 <= 'Z') {
+                c2 += 'n' - 'N';
+            }
+        } while ((c2 < 'a' || c2 > 'z') && (c2 < '0' || c2 > '9'));
+        if (c1 != c2) {
             return false;
         }
     }
-    free(str);
-    return true;
 }
 
 int main() {
@@ -31,11 +43,7 @@ int main() {
     for (int i = 0; i < sSize; i++) {
         printf("Example %d:\n", i + 1);
         printf("Input: s = \"%s\"\n", s[i]);
-        if (isPalindrome(s[i])) {
-            printf("Output: true\n\n");
-        } else {
-            printf("Output: false\n\n");
-        }
+        printf("Output: %s\n\n", isPalindrome(s[i]) ? "true" : "false");
     }
 
     return 0;
