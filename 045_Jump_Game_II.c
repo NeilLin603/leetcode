@@ -1,5 +1,8 @@
 #include <stdio.h>
 
+#define METHOD 1 // 1: loop method, 2: recursive method
+
+#if (METHOD == 1)
 int jump(int *nums, int numsSize) {
     if (numsSize == 1) {
         return 0;
@@ -16,13 +19,31 @@ int jump(int *nums, int numsSize) {
     }
     return step;
 }
+#elif (METHOD == 2)
+int jump(int *nums, int numsSize) {
+    if (numsSize == 1) {
+        return 0;
+    }
+    if (*nums >= numsSize - 1) {
+        return 1;
+    }
+    int max = 0, idx = 0;
+    for (int i = 1; i <= *nums; i++) {
+        if (--max < nums[i]) {
+            max = nums[i];
+            idx = i;
+        }
+    }
+    return 1 + jump(nums + idx, numsSize - idx);
+}
+#endif
 
-void printArray(const int *nums, int numsSize, const char *name) {
+void printArray(int *nums, int numsSize, char *name) {
     printf("%s = [", name);
     if (numsSize) {
-        printf("%d", nums[0]);
-        for (int i = 1; i < numsSize; i++) {
-            printf(",%d", nums[i]);
+        printf("%d", *nums);
+        while (--numsSize) {
+            printf(",%d", *++nums);
         }
     }
     printf("]\n");
