@@ -33,31 +33,31 @@ struct ListNode *removeNthFromEnd(struct ListNode *head, int n) {
 }
 
 int main() {
-    struct TestCase {
-        int vals[30], valsSize, n;
+    struct {
+        int vals[5], valsSize, n;
     } tc[] = {
         {.vals = {1,2,3,4,5}, .valsSize = 5, .n = 2},
         {.vals = {1}, .valsSize = 1, .n = 1},
-        {.vals = {1,2}, .valsSize = 2, .n = 1}};
+        {.vals = {1,2}, .valsSize = 2, .n = 1}
+    };
     int tcSize = sizeof(tc) / sizeof(tc[0]);
-    Node_t *head;
 
+    Node_t *head;
     for (int i = 0; i < tcSize; i++) {
+        printf("Example %d:\n", i + 1);
+
         // Create list
         head = createList(tc[i].vals, tc[i].valsSize);
-
-        // Input
-        printf("Example %d:\n", i + 1);
-        printSinglyList(head, "Input: head");
+        printList(head, "Input: head");
         printf("n = %d\n", tc[i].n);
 
-        // Output
+        // Remove the target node
         head = removeNthFromEnd(head, tc[i].n);
-        printSinglyList(head, "Output");
+        printList(head, "Output");
         printf("\n");
 
-        // Free list nodes
-        freeSinglyList(&head);
+        // Free list
+        freeList(&head);
     }
 
     return 0;
