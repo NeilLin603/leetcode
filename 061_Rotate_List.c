@@ -9,48 +9,51 @@
  */
 struct ListNode *rotateRight(struct ListNode *head, int k) {
     if (head) {
-        struct ListNode *cur = head;
+        // Travel to the tail of the list
         int n = 1;
-        while (cur->next) {
-            cur = cur->next;
+        struct ListNode *tail = head;
+        while (tail->next) {
             n++;
+            tail = tail->next;
         }
-        cur->next = head;
+        tail->next = head; // Concatenate tail & head nodes
+
+        // Find the break point
         k = n - k % n;
         while (k--) {
-            cur = cur->next;
+            tail = tail->next;
         }
-        head = cur->next;
-        cur->next = NULL;
+        head = tail->next;
+        tail->next = NULL;
     }
     return head;
 }
 
 int main() {
-    struct TestCase {
-        int vals[30], valsSize, k;
+    struct {
+        int vals[10], valsSize, k;
     } tc[] = {
         {.vals = {1,2,3,4,5}, .valsSize = 5, .k = 2},
-        {.vals = {0,1,2}, .valsSize = 3, .k = 4}};
+        {.vals = {0,1,2}, .valsSize = 3, .k = 4}
+    };
     int tcSize = sizeof(tc) / sizeof(tc[0]);
-    Node_t *head;
 
+    Node_t *head;
     for (int i = 0; i < tcSize; i++) {
-        // Create list
-        head = createList(tc[i].vals, tc[i].valsSize);
+        printf("Example %d:\n", i + 1);
 
         // Input
-        printf("Example %d:\n", i + 1);
-        printSinglyList(head, "Input: head");
+        head = createList(tc[i].vals, tc[i].valsSize);
+        printList(head, "Input: head");
         printf("k = %d\n", tc[i].k);
 
         // Output
         head = rotateRight(head, tc[i].k);
-        printSinglyList(head, "Output");
+        printList(head, "Output");
         printf("\n");
 
-        // Free list nodes
-        freeSinglyList(&head);
+        // Free list
+        freeList(&head);
     }
 
     return 0;
