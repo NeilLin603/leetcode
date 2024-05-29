@@ -8,72 +8,75 @@
  * };
  */
 struct ListNode *partition(struct ListNode *head, int x) {
-    if (head) {
-        struct ListNode *cur = head, *tail, *head1, *tail1;
-        if (head->val < x) {
-            while (cur->val < x) {
-                tail = cur;
-                cur = cur->next;
-                if (!cur) {
-                    return head;
-                }
-            }
-            head1 = cur;
-            tail1 = cur;
-        } else {
-            head1 = head;
-            while (cur->val >= x) {
-                tail1 = cur;
-                cur = cur->next;
-                if (!cur) {
-                    return head;
-                }
-            }
-            head = cur;
-            tail = cur;
-        }
-        cur = cur->next;
-        while (cur) {
-            if (cur->val < x) {
-                tail->next = cur;
-                tail = cur;
-            } else {
-                tail1->next = cur;
-                tail1 = cur;
-            }
-            cur = cur->next;
-        }
-        tail->next = head1;
-        tail1->next = NULL;
+    if (!head) {
+        return NULL;
     }
-    return head;
+
+    // Search the head nodes for two partitions
+    struct ListNode *l1, *l2, *t1, *t2; 
+    if (head->val < x) {
+        l1 = head;
+        do {
+            t1 = head;
+            head = head->next;
+            if (!head) {
+                return l1;
+            }
+        } while (head->val < x);
+        l2 = t2 = head;
+    } else {
+        l2 = head;
+        do {
+            t2 = head;
+            head = head->next;
+            if (!head) {
+                return l2;
+            }
+        } while (head->val >= x);
+        l1 = t1 = head;
+    }
+
+    // Distribute the other nodes for two partitions
+    while (head->next) {
+        head = head->next;
+        if (head->val < x) {
+            t1 = t1->next = head;
+        } else {
+            t2 = t2->next = head;
+        }
+    }
+
+    // Combine the two partitions
+    t1->next = l2;
+    t2->next = NULL;
+    return l1;
 }
 
 int main() {
-    struct TestCase {
-        int vals[30], valsSize, x;
+    struct {
+        int vals[10], valsSize, x;
     } tc[] = {
         {.vals = {1,4,3,2,5,2}, .valsSize = 6, .x = 3},
-        {.vals = {2,1}, .valsSize = 2, .x = 2}};
+        {.vals = {2,1}, .valsSize = 2, .x = 2},
+    };
     int tcSize = sizeof(tc) / sizeof(tc[0]);
-    Node_t *head;
 
+    Node_t *head;
     for (int i = 0; i < tcSize; i++) {
-        // Create list
-        head = createList(tc[i].vals, tc[i].valsSize);
+        printf("Example %d:\n", i + 1);
 
         // Input
-        printf("Example %d:\n", i + 1);
-        printSinglyList(head, "Input: head");
+        head = createList(tc[i].vals, tc[i].valsSize);
+        printList(head, "Input: head");
         printf("x = %d\n", tc[i].x);
 
         // Output
         head = partition(head, tc[i].x);
-        printSinglyList(head, "Output");
+        printList(head, "Output");
         printf("\n");
 
-        // Free list nodes
-        freeSinglyList(&head);
+        // Free list
+        freeList(&head);
     }
 
     return 0;
