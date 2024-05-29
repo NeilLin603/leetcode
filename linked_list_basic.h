@@ -112,7 +112,7 @@ static Node_t *createList(int *vals, int valsSize) {
  * \param name The list name.
  * \return None.
  */
-static void printSinglyList(Node_t *head, const char *name) {
+static void printList(Node_t *head, const char *name) {
     printf("%s = ", name);
     while (head) {
         printf("(%d)->", head->val);
