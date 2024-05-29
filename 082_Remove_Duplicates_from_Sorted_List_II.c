@@ -7,14 +7,10 @@
  *     struct ListNode *next;
  * };
  */
-struct ListNode *deleteDuplicates(struct ListNode *head) {
-    if (!head) {
-        return NULL;
-    }
+static struct ListNode *deleteDuplicatesSub(struct ListNode *head) {
     if (!head->next) {
         return head;
     }
-
     int val;
     struct ListNode *ret;
     while (head->val == head->next->val) {
@@ -31,8 +27,12 @@ struct ListNode *deleteDuplicates(struct ListNode *head) {
             return head;
         }
     }
-    head->next = deleteDuplicates(head->next);
+    head->next = deleteDuplicatesSub(head->next);
     return head;
+}
+
+struct ListNode *deleteDuplicates(struct ListNode *head) {
+    return head ? deleteDuplicatesSub(head) : NULL;
 }
 
 int main() {
