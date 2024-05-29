@@ -1,6 +1,6 @@
 #include "linked_list_basic.h"
 
-/**
+//**
  * Definition for singly-linked list.
  * struct ListNode {
  *     int val;
@@ -8,76 +8,57 @@
  * };
  */
 struct ListNode *deleteDuplicates(struct ListNode *head) {
-    if (head && head->next) {
-        struct ListNode *cur = head->next;
-        while (head->val == cur->val) {
-            do {
-                free(head);
-                head = cur;
-                cur = cur->next;
-                if (!cur) {
-                    return NULL;
-                }
-            } while (head->val == cur->val);
-            free(head);
-            head = cur;
-            cur = cur->next;
-            if (!cur) {
-                return head;
+    if (!head) {
+        return NULL;
+    }
+    if (!head->next) {
+        return head;
+    }
+
+    int val;
+    struct ListNode *ret;
+    while (head->val == head->next->val) {
+        val = head->val;
+        do {
+            ret = head;
+            head = ret->next;
+            free(ret);
+            if (!head) {
+                return NULL;
             }
-        }
-        struct ListNode *prv = head, *next = cur->next;
-        while (next) {
-            while (cur->val == next->val) {
-                do {
-                    free(cur);
-                    cur = next;
-                    next = cur->next;
-                    if (!next) {
-                        prv->next = NULL;
-                        return head;
-                    }
-                } while (cur->val == next->val);
-                free(cur);
-                cur = next;
-                next = cur->next;
-                prv->next = cur;
-                if (!next) {
-                    return head;
-                }
-            }
-            prv = cur;
-            cur = next;
-            next = cur->next;
+        } while (val == head->val);
+        if (!head->next) {
+            return head;
         }
     }
+    head->next = deleteDuplicates(head->next);
     return head;
 }
 
 int main() {
-    struct TestCase {
-        int vals[30], valsSize;
+    struct {
+        int vals[10], valsSize;
     } tc[] = {
         {.vals = {1,2,3,3,4,4,5}, .valsSize = 7},
-        {.vals = {1,1,1,2,3}, .valsSize = 5}};
+        {.vals = {1,1,1,2,3}, .valsSize = 5}
+    };
     int tcSize = sizeof(tc) / sizeof(tc[0]);
-    Node_t *head;
 
+    Node_t *head;
     for (int i = 0; i < tcSize; i++) {
-        // Create list
-        head = createList(tc[i].vals, tc[i].valsSize);
+        printf("Example %d:\n", i + 1);
 
         // Input
-        printf("Example %d:\n", i + 1);
-        printSinglyList(head, "Input: head");
+        head = createList(tc[i].vals, tc[i].valsSize);
+        printList(head, "Input: head");
 
         // Output
         head = deleteDuplicates(head);
-        printSinglyList(head, "Output");
+        printList(head, "Output");
         printf("\n");
 
-        // Free list nodes
-        freeSinglyList(&head);
+        // Free list
+        freeList(&head);
     }
 
     return 0;
