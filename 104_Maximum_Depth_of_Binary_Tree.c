@@ -32,7 +32,7 @@ int main() {
         printf("Example %d:\n", i + 1);
 
         // Input
-        root = createTree(tc[i].vals, tc[i].valsSize);
+        root = buildTree(tc[i].vals, tc[i].valsSize);
         printTree(root, "Input: root");
 
         // Output
