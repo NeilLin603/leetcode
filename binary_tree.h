@@ -109,7 +109,7 @@ static void printTree(Node_t *root, char *name) {
             }
         }
     }
-    printf("]\n");
+    printf("]");
 }
 
 static void freeTree(Node_t **root) {
