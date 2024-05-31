@@ -48,7 +48,7 @@ static bool dequeue(Queue_t *q, Node_t **node) {
     return true;
 }
 
-static Node_t *createTree(int *vals, int valsSize) {
+static Node_t *buildTree(int *vals, int valsSize) {
     if (!valsSize) {
         return NULL;
     }
