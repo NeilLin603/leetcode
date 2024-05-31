@@ -80,7 +80,7 @@ static Node_t *buildTree(int *vals, int valsSize) {
         }
         enqueue(&q, node->right);
     }
-    while (dequeue(&q, &node)) {
+    while (dequeue(&q, &node)) if (node) {
         node->left = node->right = NULL;
     }
     return root;
