@@ -86,15 +86,6 @@ static Node_t *buildTree(int *vals, int valsSize) {
     return root;
 }
 
-static void freeTree(Node_t **root) {
-    if (*root) {
-        freeTree(&(*root)->left);
-        freeTree(&(*root)->right);
-        free(*root);
-        *root = NULL;
-    }
-}
-
 static void printTree(Node_t *root, char *name) {
     printf("%s = [", name);
     if (root) {
@@ -119,6 +110,15 @@ static void printTree(Node_t *root, char *name) {
         }
     }
     printf("]\n");
+}
+
+static void freeTree(Node_t **root) {
+    if (*root) {
+        freeTree(&(*root)->left);
+        freeTree(&(*root)->right);
+        free(*root);
+        *root = NULL;
+    }
 }
 
 #endif /* BINARY_TREE_H */
