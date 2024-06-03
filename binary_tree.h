@@ -27,7 +27,7 @@ static void enqueue(Queue_t *q, Node_t *node) {
     QNode_t *new = (QNode_t *)malloc(sizeof(QNode_t));
     new->node = node;
     new->next = NULL;
-    if (q->tail) {
+    if (q->head) {
         q->tail = q->tail->next = new;
     } else {
         q->head = q->tail = new;
@@ -48,6 +48,12 @@ static bool dequeue(Queue_t *q, Node_t **node) {
     return true;
 }
 
+/**
+ * \brief Build a binary tree.
+ * \param vals The input array with tree values.
+ * \param valsSize Number of input array elements.
+ * \return The root node of the tree.
+ */
 static Node_t *buildTree(int *vals, int valsSize) {
     if (!valsSize) {
         return NULL;
@@ -56,7 +62,8 @@ static Node_t *buildTree(int *vals, int valsSize) {
     Node_t *root = (Node_t *)malloc(sizeof(Node_t)), *node;
     root->val = *vals;
     enqueue(&q, root);
-    while (dequeue(&q, &node)) if (node) {
+
+    while (dequeue(&q, &node)) {
         if (!--valsSize) {
             node->left = node->right = NULL;
             break;
@@ -64,10 +71,11 @@ static Node_t *buildTree(int *vals, int valsSize) {
         if (*++vals != NULL_NODE) {
             node->left = (Node_t *)malloc(sizeof(Node_t));
             node->left->val = *vals;
+            enqueue(&q, node->left);
         } else {
             node->left = NULL;
         }
-        enqueue(&q, node->left);
+
         if (!--valsSize) {
             node->right = NULL;
             break;
@@ -75,17 +83,23 @@ static Node_t *buildTree(int *vals, int valsSize) {
         if (*++vals != NULL_NODE) {
             node->right = (Node_t *)malloc(sizeof(Node_t));
             node->right->val = *vals;
+            enqueue(&q, node->right);
         } else {
             node->right = NULL;
         }
-        enqueue(&q, node->right);
     }
-    while (dequeue(&q, &node)) if (node) {
+    while (dequeue(&q, &node)) {
         node->left = node->right = NULL;
     }
     return root;
 }
 
+/**
+ * \brief Print binary tree.
+ * \param root The root node of the tree.
+ * \param name Tree's name.
+ * \return None.
+ */
 static void printTree(Node_t *root, char *name) {
     printf("%s = [", name);
     if (root) {
@@ -112,6 +126,11 @@ static void printTree(Node_t *root, char *name) {
     printf("]");
 }
 
+/**
+ * \brief Free tree.
+ * \param root Pointer to the root node of the tree.
+ * \return None.
+ */
 static void freeTree(Node_t **root) {
     if (*root) {
         freeTree(&(*root)->left);
