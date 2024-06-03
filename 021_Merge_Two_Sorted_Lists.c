@@ -1,5 +1,6 @@
 #include "linked_list_basic.h"
 
+#if 1 /* Loop approach */
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -16,30 +17,45 @@ struct ListNode *mergeTwoLists(struct ListNode *list1, struct ListNode *list2) {
     }
 
     // Head node
-    struct ListNode *head;
+    struct ListNode *head, *cur;
     if (list1->val < list2->val) {
-        head = list1;
-        list1 = list1->next;
+        head = cur = list1;
     } else {
-        head = list2;
-        list2 = list2->next;
+        head = cur = list2;
+        list2 = list1;
     }
 
     // Others
-    struct ListNode *cur = head;
-    while (list1 && list2) {
+    list1 = cur->next;
+    while (list1) {
         if (list1->val < list2->val) {
-            cur->next = list1;
-            list1 = list1->next;
+            cur = list1;
+            list1 = cur->next;
         } else {
-            cur->next = list2;
-            list2 = list2->next;
+            cur = cur->next = list2;
+            list2 = list1;
+            list1 = cur->next;
         }
-        cur = cur->next;
     }
-    cur->next = list1 ? list1 : list2;
+    cur->next = list2;
     return head;
 }
+#else /* Recursive approach */
+struct ListNode *mergeTwoLists(struct ListNode *list1, struct ListNode *list2) {
+    if (!list1) {
+        return list2;
+    }
+    if (!list2) {
+        return list1;
+    }
+    if (list1->val < list2->val) {
+        list1->next = mergeTwoLists(list1->next, list2);
+        return list1;
+    }
+    list2->next = mergeTwoLists(list1, list2->next);
+    return list2;
+}
+#endif
 
 int main() {
     struct {
