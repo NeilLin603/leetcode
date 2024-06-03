@@ -61,6 +61,7 @@ int main() {
         printList(head, "\nOutput");
         printf("\n\n");
 
+        // Free list
         freeList(&head);
     }
 
