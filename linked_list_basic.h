@@ -118,7 +118,7 @@ static void printList(Node_t *head, const char *name) {
         printf("(%d)->", head->val);
         head = head->next;
     }
-    printf("null\n");
+    printf("null");
 }
 
 /**
