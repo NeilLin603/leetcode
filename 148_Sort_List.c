@@ -59,7 +59,7 @@ int main() {
         // Output
         head = sortList(head);
         printList(head, "\nOutput");
-        printf("\n");
+        printf("\n\n");
 
         freeList(&head);
     }
