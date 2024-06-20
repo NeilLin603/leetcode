@@ -21,7 +21,7 @@
 //!           -5  1 |                       |
 //!           -6  0 |           *           |   *
 //! ----------------------------------------------------------------
-//! Target index    |               ^                       ^
+//! Target index    |               ^       |               ^
 //! ----------------------------------------------------------------
 //!
 //! If the total sum of array 'gas - cost' < 0: return -1
@@ -78,5 +78,6 @@ int main() {
         printf("\nOutput: %d\n\n", canCompleteCircuit(tc[i].gas, tc[i].gasSize,
                                                       tc[i].cost, 0));
     }
+
     return 0;
 }
