@@ -40,10 +40,7 @@ int canCompleteCircuit(int *gas, int gasSize, int *cost, int costSize) {
             costSize = gasSize;
         }
     }
-    if (sum < 0) {
-        return -1;
-    }
-    return costSize;
+    return sum >= 0 ? costSize : -1;
 }
 
 void printArray(int *nums, int numsSize, char *name) {
