@@ -8,12 +8,12 @@
 //! 2. Use another stack to store the min values, for the purpose of achieving
 //!    the objective of O(1) time complexity for each API.
 //!
-//! Base Stack:
+//! Base stack:
 //! |    |    |    |    |    |    | -3 |    |    |    |    |    |    |
 //! |    | => |    | => |  0 | => |  0 | => |  0 | => |    | => |    |
 //! |____|    |_-2_|    |_-2_|    |_-2_|    |_-2_|    |_-2_|    |____|
 //!
-//! Min Stack:
+//! Min stack:
 //! |    |    |    |    |    |    |    |    |    |    |    |    |    |
 //! |    | => |    | => |    | => | -3 | => |    | => |    | => |    |
 //! |____|    |_-2_|    |_-2_|    |_-2_|    |_-2_|    |_-2_|    |____|
