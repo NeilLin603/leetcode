@@ -20,6 +20,7 @@
 //! approach to narrow down the series recursively. Eventually the peak value at
 //! index 5 shall be found out.
 //! ****************************************************************************
+#if 0 /* Recursion */
 int findPeakElement(int *nums, int numsSize) {
     if (numsSize == 1) {
         return 0;
@@ -31,6 +32,22 @@ int findPeakElement(int *nums, int numsSize) {
     return nums[i - 1] >= nums[i] ? findPeakElement(nums, i) :
                                     findPeakElement(nums + i, numsSize - i) + i;
 }
+#else /* Iteration (convert from recursion to improve speed) */
+int findPeakElement(int *nums, int numsSize) {
+    int i, index = 0;
+    while (numsSize > 2) {
+        i = numsSize >> 1;
+        if (nums[i - 1] >= nums[i]) {
+            numsSize = i;
+        } else {
+            nums += i;
+            numsSize -= i;
+            index += i;
+        }
+    }
+    return numsSize == 1 || *nums > nums[1] ? index : index + 1;
+}
+#endif
 
 void printArray(int *nums, int numsSize, char *name) {
     printf("%s = [", name);
