@@ -16,9 +16,9 @@
 //! 1       *      (*)
 //!
 //! [*] is greater than (*), which denotes it's climbing from (*) to [*] at the
-//! middle of series. So we choose index 3 as the new lower bound. By using this
-//! approach to narrow down the series recursively. Eventually the peak value at
-//! index 5 shall be found out.
+//! middle of the series. So we choose index 3 as the new lower bound. By using
+//! this approach to narrow down the series recursively. Eventually the peak
+//! value at index 5 shall be found out.
 //! ****************************************************************************
 #if 0 /* Recursion */
 int findPeakElement(int *nums, int numsSize) {
