@@ -11,6 +11,8 @@
 //! 3. Check if the target number is within the half series with ascending order
 //!    If so, keep narrowing down this half of the series in the same way.
 //!    Otherwise, search the other half of the series for the target.
+//!
+//! Time complexity: O(log n), Space complexity: O(1)
 //! ****************************************************************************
 int search(int *nums, int numsSize, int target) {
     int i = 0, j = numsSize - 1, k, cond1, cond2;
