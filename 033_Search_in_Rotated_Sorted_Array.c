@@ -8,7 +8,7 @@
 //!    (nums[i]). If so, then each number in the first-half series (index i~k)
 //!    is strictly ascending. Otherwise, the second-half series (index k~j) is
 //!    strictly ascending.
-//! 3. Check if the target number is within the half series with ascending order
+//! 3. Check if the target value is within the half series with ascending order
 //!    If so, keep narrowing down this half of the series in the same way.
 //!    Otherwise, search the other half of the series for the target.
 //!
