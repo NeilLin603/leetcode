@@ -76,18 +76,6 @@ typedef struct {
 }                                                                              \
 (node)->hashNext = NULL
 
-/**
- * Macro to free up list memory.
- */
-#define freeList(head) {                                                       \
-    Node_t *tmp;                                                               \
-    while (head) {                                                             \
-        tmp = (head);                                                          \
-        (head) = tmp->listNext;                                                \
-        free(tmp);                                                             \
-    }                                                                          \
-}
-
 LRUCache *lRUCacheCreate(int capacity) {
     LRUCache *cache = (LRUCache *)malloc(sizeof(LRUCache));
     cache->capacity = capacity;
@@ -172,7 +160,16 @@ void lRUCachePut(LRUCache *obj, int key, int value) {
 }
 
 void lRUCacheFree(LRUCache *obj) {
-    freeList(obj->head);  // Free up list nodes
+    // Free up list nodes
+    if (obj->head) {
+        Node_t *cur = obj->head;
+        while (cur->listNext) {
+            cur = cur->listNext;
+            free(cur->listPrev);
+        }
+        free(cur);
+    }
+
     free(obj->hashTable); // Free up hash table
     free(obj);            // Free up cache
 }
@@ -198,7 +195,7 @@ void Debug_printListBackward(const Node_t *tail, const char *name) {
     printf("null\n");
 }
 
-void Debug_printTable(Node_t **table, int tableSize) {
+void Debug_printHashTable(Node_t **table, int tableSize) {
     Node_t *cur;
     printf("--- Start of hash table ---\n");
     while (tableSize--) {
@@ -215,7 +212,7 @@ void Debug_printTable(Node_t **table, int tableSize) {
 #define DEBUG(obj) printf("\n<Debug info>\n");                                 \
     Debug_printListForward((obj)->head, "LRU order");                          \
     Debug_printListBackward((obj)->tail, "MRU order");                         \
-    Debug_printTable((obj)->hashTable, (obj)->capacity);                       \
+    Debug_printHashTable((obj)->hashTable, (obj)->capacity);                   \
     printf("\n")
 
 /**
@@ -240,6 +237,9 @@ int main() {
 
     // Create cache
     LRUCache *cache = lRUCacheCreate(capacity);
+    printf("//-------------------------------------------------------//\n");
+    printf("// A cache with size %d has been created\n", capacity);
+    printf("//-------------------------------------------------------//\n");
     DEBUG(cache);
 
     int key, value, step = 0;
