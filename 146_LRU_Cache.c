@@ -5,7 +5,7 @@
 //! Solving concept:
 //! 1. Implement a doubly-linked list and a hash table. Where the linked list is
 //!    used to indicate the recently used order. And the hash table is used for
-//!    O(1) time complecity getting and putting nodes.
+//!    getting and putting nodes with O(1) time complexity.
 //! 2. Use the chaining approach to handle the hash collisions.
 //!
 //! Hash table:
@@ -22,7 +22,7 @@
 //! Doubly-linked list:
 //! (head)<->...<->q<->...<->p<->...<->(tail)
 //!  LRU ------------------------------> MRU
-//! Rule: add to tail, remove from head.
+//! Rule of the list: add to tail and remove from head.
 //!
 //!*****************************************************************************
 //
