@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 // Since the input strings contain only lower case English letters, a hash table
-// with size of 26 can avoid any hash collision
+// with size of 26 can avoid from any hash collision
 #define TABLE_SIZE 26
 
 /**
