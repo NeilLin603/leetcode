@@ -95,7 +95,7 @@ bool wordPattern(char *pattern, char *s) {
             if (isSameString(table1[hash1(table2[j])], word)) {
                 return false; // Hash hit, return false
             }
-            j++; // Hash collision, check the next bucket
+            j = (j + 1) % TABLE_SIZE; // Hash collision, check the next bucket
         }
 
         // Add members to both tables
